@@ -25,6 +25,76 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+  <style>
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+    .comparison-grid .video-box {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid #eee;
+    }
+    .comparison-grid .video-box video {
+      width: 100%;
+      display: block;
+    }
+    .comparison-grid .video-box .video-label {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 2;
+    }
+    .comparison-grid .video-box .video-label.ours {
+      background: rgba(230, 57, 70, 0.85);
+    }
+    .comparison-grid .video-box .video-label.baseline {
+      background: rgba(100, 100, 100, 0.85);
+    }
+    .task-title {
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+      color: #363636;
+    }
+    .benchmark-label {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .benchmark-label.libero { background: #e8f5e9; color: #2e7d32; }
+    .benchmark-label.metaworld { background: #e3f2fd; color: #1565c0; }
+    .section-divider {
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 2rem 0;
+    }
+    .placeholder-box {
+      background: #f5f5f5;
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      color: #999;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+  </style>
 </head>
 <body>
 
@@ -46,6 +116,7 @@
       </div>
   </div>
 </nav>
+
 
 
 <section class="hero">
@@ -115,226 +186,359 @@
   </div>
 </section>
 
+<!-- ======== TEASER: PARETO PLOTS ======== -->
 
 <section class="hero teaser">
-  <div class="container is-max-desktop">
+  <div class="container" style="max-width: 1400px;">
     <div class="hero-body">
-      <div class="columns is-centered">
-        <div class="column is-half">
-          <img src="./static/images/libero.png" alt="LIBERO benchmark results showing BCAT parameter efficiency">
+      <div class="columns is-centered is-gapless">
+        <div class="column">
+          <img src="./static/images/libero.png" alt="LIBERO benchmark: BCAT vs VLAs" style="width:100%;">
         </div>
-        <div class="column is-half">
-          <img src="./static/images/metaworld.png" alt="Meta-World benchmark results showing BCAT parameter efficiency">
+        <div class="column">
+          <img src="./static/images/metaworld.png" alt="Meta-World benchmark: BCAT vs VLAs" style="width:100%;">
         </div>
       </div>
       <h2 class="subtitle has-text-centered">
-        <b>BCAT</b>, a simple deterministic behavioral cloning transformer decoder (32M params, &lt;10M trainable), matches or exceeds billion-parameter VLAs on standard manipulation benchmarks at a fraction of the compute.
+        <b>BCAT</b>, a simple deterministic behavioral cloning transformer (32M params, &lt;10M trainable), matches or exceeds billion-parameter VLAs on standard manipulation benchmarks at a fraction of the compute.
       </h2>
     </div>
   </div>
 </section>
 
 
-
+<!-- ======== ABSTRACT ======== -->
 <section class="section">
   <div class="container is-max-desktop">
-    <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We present the first method capable of photorealistically reconstructing a non-rigidly
-            deforming scene using photos/videos captured casually from mobile phones.
+            Vision-Language-Action (VLA) models have established new frontiers in learning autonomous fine-grained manipulation policies, achieving state-of-the-art performance across several simulation benchmarks and on-hardware tasks. While real-world robotic setups are inherently unique and difficult to reproduce, simulation benchmarks offer deterministic, controllable environments that serve as ideal testbeds for systematic policy evaluation.
           </p>
           <p>
-            Our approach augments neural radiance fields
-            (NeRF) by optimizing an
-            additional continuous volumetric deformation field that warps each observed point into a
-            canonical 5D NeRF.
-            We observe that these NeRF-like deformation fields are prone to local minima, and
-            propose a coarse-to-fine optimization method for coordinate-based models that allows for
-            more robust optimization.
-            By adapting principles from geometry processing and physical simulation to NeRF-like
-            models, we propose an elastic regularization of the deformation field that further
-            improves robustness.
+            In this paper, we shed light on two underexplored aspects of current trends in imitation learning for robotic manipulation. First, we demonstrate that large-scale VLA policies with billions of parameters can be matched on standard simulation benchmarks by <b>simple, non-autoregressive action transformers with fewer than 10 million trainable parameters</b>. We show that a bidirectional decoder-only action transformer trained with behavioral cloning achieves performance within the range of current state-of-the-art leaderboards on both the LIBERO and Meta-World simulation benchmarks.
           </p>
           <p>
-            We show that <span class="dnerf">Nerfies</span> can turn casually captured selfie
-            photos/videos into deformable NeRF
-            models that allow for photorealistic renderings of the subject from arbitrary
-            viewpoints, which we dub <i>"nerfies"</i>. We evaluate our method by collecting data
-            using a
-            rig with two mobile phones that take time-synchronized photos, yielding train/validation
-            images of the same pose at different viewpoints. We show that our method faithfully
-            reconstructs non-rigidly deforming scenes and reproduces unseen views with high
-            fidelity.
+            Second, we argue that these standard robotics benchmarks suffer from insufficient task complexity, lack multimodality in the action distribution, do not require language grounding for disambiguation, and are fundamentally small-data regimes. Under these conditions, we show that generative modeling paradigms based on denoising score matching such as flow matching are unnecessarily complex. Flow-matching-based action Diffusion Transformers of comparable parameter count exhibit lower success rates and produce jerky, noisy trajectories. By contrast, a standard deterministic behavioral cloning policy yields substantially higher success rates, even with vision-only input and no language conditioning.
           </p>
         </div>
       </div>
     </div>
-    <!--/ Abstract. -->
-
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    <!--/ Paper video. -->
   </div>
 </section>
 
-
+<!-- ======== BCAT vs FLOW MATCHING: DEPLOYMENT COMPARISON ======== -->
 <section class="section">
   <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-
-      <!-- Visual Effects. -->
-      <div class="column">
-        <div class="content">
-          <h2 class="title is-3">Visual Effects</h2>
-          <p>
-            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
-            would be impossible without nerfies since it would require going through a wall.
-          </p>
-          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/dollyzoom-stacked.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <!--/ Visual Effects. -->
-
-      <!-- Matting. -->
-      <div class="column">
-        <h2 class="title is-3">Matting</h2>
-        <div class="columns is-centered">
-          <div class="column content">
-            <p>
-              As a byproduct of our method, we can also solve the matting problem by ignoring
-              samples that fall outside of a bounding box during rendering.
-            </p>
-            <video id="matting-video" controls playsinline height="100%">
-              <source src="./static/videos/matting.mp4"
-                      type="video/mp4">
-            </video>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <!--/ Matting. -->
-
-    <!-- Animation. -->
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Animation</h2>
-
-        <!-- Interpolating. -->
-        <h3 class="title is-4">Interpolating states</h3>
+        <h2 class="title is-3">Deterministic BC vs. Flow Matching: Deployment Comparison</h2>
         <div class="content has-text-justified">
           <p>
-            We can also animate the scene by interpolating the deformation latent codes of two input
-            frames. Use the slider here to linearly interpolate between the left frame and the right
-            frame.
+            We compare rollouts from our deterministic BCAT policy against flow-matching-based DiT policies of comparable parameter count. BCAT produces smooth, goal-directed trajectories, while flow matching models exhibit jerky, noisy movements that often lead to misgrasps, unsafe motions, and collisions.
           </p>
         </div>
-        <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
-          </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
+
+        <!-- LIBERO tasks -->
+        <h3 class="title is-4">LIBERO</h3>
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <p class="task-title"><span class="benchmark-label libero">LIBERO-Spatial</span> Pick up the black bowl on the stove and place it on the plate.</p>
+            <div class="comparison-grid">
+              <div class="video-box">
+                <span class="video-label ours">BCAT (Ours)</span>
+                <video autoplay muted loop playsinline><source src="./static/videos/libero_spatial_bcat.mp4" type="video/mp4"></video>
+              </div>
+              <div class="video-box">
+                <span class="video-label baseline">FM-DiT</span>
+                <div class="placeholder-box">FM-DiT video</div>
+              </div>
             </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
           </div>
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
+          <div class="column is-half">
+            <p class="task-title"><span class="benchmark-label libero">LIBERO-Long</span> Put the moka pot on the stove and turn on the stove</p>
+            <div class="comparison-grid">
+              <div class="video-box">
+                <span class="video-label ours">BCAT (Ours)</span>
+                <video autoplay muted loop playsinline><source src="./static/videos/libero_10_bcat.mp4" type="video/mp4"></video>
+              </div>
+              <div class="video-box">
+                <span class="video-label baseline">FM-DiT</span>
+                <div class="placeholder-box">FM-DiT video</div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <p class="task-title"><span class="benchmark-label libero">LIBERO-Object</span> Pick up the alphabet soup and place in basket</p>
+            <div class="comparison-grid">
+              <div class="video-box">
+                <span class="video-label ours">BCAT (Ours)</span>
+                <video autoplay muted loop playsinline><source src="./static/videos/libero_object_bcat.mp4" type="video/mp4"></video>
+              </div>
+              <div class="video-box">
+                <span class="video-label baseline">FM-MMDiT</span>
+                <div class="placeholder-box">FM-MMDiT video</div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <p class="task-title"><span class="benchmark-label libero">LIBERO-Goal</span> Open the middle drawer of the cabinet</p>
+            <div class="comparison-grid">
+              <div class="video-box">
+                <span class="video-label ours">BCAT (Ours)</span>
+                <video autoplay muted loop playsinline><source src="./static/videos/libero_goal_bcat.mp4" type="video/mp4"></video>
+              </div>
+              <div class="video-box">
+                <span class="video-label baseline">FM-MMDiT</span>
+                <div class="placeholder-box">FM-MMDiT video</div>
+              </div>
+            </div>
           </div>
         </div>
-        <br/>
-        <!--/ Interpolating. -->
 
-        <!-- Re-rendering. -->
-        <h3 class="title is-4">Re-rendering the input video</h3>
-        <div class="content has-text-justified">
-          <p>
-            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
-            viewpoint such as a stabilized camera by playing back the training deformations.
-          </p>
+        <hr class="section-divider">
+
+        <!-- Meta-World tasks -->
+        <h3 class="title is-4">Meta-World</h3>
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <p class="task-title"><span class="benchmark-label metaworld">MT50-Easy</span> reach-v2</p>
+            <div class="comparison-grid">
+              <div class="video-box">
+                <span class="video-label ours">BCAT (Ours)</span>
+                <div class="placeholder-box">BCAT video</div>
+              </div>
+              <div class="video-box">
+                <span class="video-label baseline">FM-DiT</span>
+                <div class="placeholder-box">FM-DiT video</div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <p class="task-title"><span class="benchmark-label metaworld">MT50-Hard</span> bin-picking-v2</p>
+            <div class="comparison-grid">
+              <div class="video-box">
+                <span class="video-label ours">BCAT (Ours)</span>
+                <div class="placeholder-box">BCAT video</div>
+              </div>
+              <div class="video-box">
+                <span class="video-label baseline">FM-DiT</span>
+                <div class="placeholder-box">FM-DiT video</div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <p class="task-title"><span class="benchmark-label metaworld">MT50-Medium</span> coffee-push-v2</p>
+            <div class="comparison-grid">
+              <div class="video-box">
+                <span class="video-label ours">BCAT (Ours)</span>
+                <div class="placeholder-box">BCAT video</div>
+              </div>
+              <div class="video-box">
+                <span class="video-label baseline">FM-MMDiT</span>
+                <div class="placeholder-box">FM-MMDiT video</div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <p class="task-title"><span class="benchmark-label metaworld">MT50-Very Hard</span> hammer-v2</p>
+            <div class="comparison-grid">
+              <div class="video-box">
+                <span class="video-label ours">BCAT (Ours)</span>
+                <div class="placeholder-box">BCAT video</div>
+              </div>
+              <div class="video-box">
+                <span class="video-label baseline">FM-MMDiT</span>
+                <div class="placeholder-box">FM-MMDiT video</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 width="75%">
-            <source src="./static/videos/replay.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <!--/ Re-rendering. -->
 
       </div>
     </div>
-    <!--/ Animation. -->
+  </div>
+</section>
 
-
-    <!-- Concurrent Work. -->
+<!-- ======== LANGUAGE CONDITIONING ABLATION ======== -->
+<section class="section" style="background-color: #fafafa;">
+  <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Related Links</h2>
-
+        <h2 class="title is-3">On the Redundancy of Language Conditioning</h2>
         <div class="content has-text-justified">
           <p>
-            There's a lot of excellent work that was introduced around the same time as ours.
-          </p>
-          <p>
-            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
-          </p>
-          <p>
-            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
-            both use deformation fields to model non-rigid scenes.
-          </p>
-          <p>
-            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
-          </p>
-          <p>
-            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
+            We train BCAT without the frozen BERT embedding layer, using vision-only input (9.2M parameters).
+            Language only helps in 2 of 4 LIBERO suites (Goal, Long), while providing no benefit on Meta-World where each task is fully disambiguated by the initial visual observation.
+            This demonstrates that current benchmarks do not require the language grounding that VLA architectures are designed for.
           </p>
         </div>
+
+        <div class="columns is-centered" style="margin-bottom: 1.5rem;">
+          <div class="column is-two-thirds">
+            <img src="./static/images/lang.png" alt="Language conditioning ablation on LIBERO">
+            <p class="has-text-centered is-size-7" style="color:#888; margin-top:4px;">Removing language (blue) only degrades 2 of 4 LIBERO suites.</p>
+          </div>
+        </div>
+
+        <h3 class="title is-4">Visual Examples: When Language Should Matter (But Doesn't)</h3>
+        <div class="content has-text-justified">
+          <p>
+            Even when the language instruction should disambiguate between visually similar tasks, visual features in the initial observation are in near 1-to-1 correspondence with each task identity.
+          </p>
+        </div>
+
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <p class="task-title"><span class="benchmark-label libero">LIBERO</span> Vision-only vs. Vision+Language</p>
+            <div class="comparison-grid">
+              <div class="video-box">
+                <span class="video-label ours">Vision Only</span>
+                <div class="placeholder-box">Vision-only rollout</div>
+              </div>
+              <div class="video-box">
+                <span class="video-label baseline">Vision + Lang</span>
+                <div class="placeholder-box">Vision+Lang rollout</div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <p class="task-title"><span class="benchmark-label metaworld">Meta-World</span> Vision-only vs. Vision+Language</p>
+            <div class="comparison-grid">
+              <div class="video-box">
+                <span class="video-label ours">Vision Only</span>
+                <div class="placeholder-box">Vision-only rollout</div>
+              </div>
+              <div class="video-box">
+                <span class="video-label baseline">Vision + Lang</span>
+                <div class="placeholder-box">Vision+Lang rollout</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-    <!--/ Concurrent Work. -->
-
   </div>
 </section>
 
 
+<!-- ======== LIBERO-PLUS ======== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">LIBERO-Plus: Stress-Testing Under Perturbations</h2>
+        <div class="content has-text-justified">
+          <p>
+            <a href="#">LIBERO-Plus</a> introduces modest visual and physical perturbations (lighting, textures, object positions) to test policy robustness. We evaluate BCAT on LIBERO-Plus to understand how lightweight deterministic policies degrade under distribution shift.
+          </p>
+        </div>
+
+        <div class="columns is-multiline">
+          <div class="column is-one-third">
+            <p class="task-title">Task 1</p>
+            <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden;">
+              <div class="placeholder-box">LIBERO-Plus video 1</div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <p class="task-title">Task 2</p>
+            <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden;">
+              <div class="placeholder-box">LIBERO-Plus video 2</div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <p class="task-title">Task 3</p>
+            <div style="border: 2px solid #eee; border-radius: 8px; overflow: hidden;">
+              <div class="placeholder-box">LIBERO-Plus video 3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="columns is-centered" style="margin-top: 1rem;">
+          <div class="column is-two-thirds">
+            <div class="placeholder-box" style="min-height: 250px;">
+              LIBERO-Plus success rate chart placeholder
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======== MODEL SIZE ABLATION ======== -->
+<section class="section" style="background-color: #fafafa;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">How Small Can We Go? Ablation on Model Size</h2>
+        <div class="content has-text-justified">
+          <p>
+            We ablate the network size of BCAT by varying the embedding and feedforward dimensions.
+            Reducing the model to approximately 5M trainable parameters brings consistent benefits, achieving even higher average success rates.
+            This suggests that the scaling law does not hold for small datasets like LIBERO and Meta-World&mdash;large overparameterized models overfit, small models generalize.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column is-two-thirds">
+            <div class="placeholder-box" style="min-height: 300px;">
+              Model size ablation plot: success rate vs. trainable parameters
+            </div>
+            <p class="has-text-centered is-size-7" style="color:#888; margin-top:4px;">Smaller models outperform larger ones on current benchmarks due to overfitting in the small-data regime.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======== KEY FINDINGS ======== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered">Key Findings</h2>
+        <div class="content has-text-justified">
+          <p>
+            <b>1. The data regime is fundamentally small.</b>
+            With 50 demonstrations per task, the training data covers a narrow region of the state-action space. Large overparameterized models overfit to noise and ignore signal.
+          </p>
+          <p>
+            <b>2. The task structure is too simple.</b>
+            Each task is fully disambiguated by the initial visual observation alone. Language conditioning provides no measurable benefit on Meta-World and only helps on 2 of 4 LIBERO suites.
+          </p>
+          <p>
+            <b>3. The action distributions are unimodal.</b>
+            Expert demonstrations follow similar trajectories. There is no genuine multimodality that would necessitate generative models. Deterministic BC consistently outperforms flow matching.
+          </p>
+          <p>
+            <b>We urge the community</b> to develop simulation environments with genuinely multimodal tasks, visually ambiguous scenarios requiring language disambiguation, larger demonstration datasets, and longer-horizon compositional tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======== BIBTEX ======== -->
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{park2021nerfies,
-  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
-  title     = {Nerfies: Deformable Neural Radiance Fields},
-  journal   = {ICCV},
-  year      = {2021},
+    <pre><code>@article{bcat2025,
+  author    = {Anonymous},
+  title     = {Large Scale Vision-Language-Action Models Are Not All You Need},
+  journal   = {arXiv preprint},
+  year      = {2025},
 }</code></pre>
   </div>
 </section>
@@ -342,29 +546,12 @@
 
 <footer class="footer">
   <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="./static/videos/nerfies_paper.pdf">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
     <div class="columns is-centered">
       <div class="column is-8">
-        <div class="content">
+        <div class="content has-text-centered">
           <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
+            Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+            Licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
           </p>
         </div>
       </div>
@@ -374,3 +561,11 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
