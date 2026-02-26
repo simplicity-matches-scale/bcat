@@ -200,7 +200,7 @@
         </div>
       </div>
       <h2 class="subtitle has-text-centered">
-        <b>BCAT</b>, a simple deterministic behavioral cloning transformer (32M params, &lt;10M trainable), matches or exceeds billion-parameter VLAs on standard manipulation benchmarks at a fraction of the compute.
+        <b>BCAT</b> (32M params, &lt;10M trainable) and <b>BCAT-Small (13.9M params, &lt;2.2M trainable)</b>, simple deterministic behavioral cloning transformers, matches or exceeds billion-parameter VLAs on standard manipulation benchmarks at a fraction of the compute.
       </h2>
     </div>
   </div>
@@ -275,7 +275,7 @@ conditioning.
                 <video autoplay muted loop playsinline><source src="./static/videos/libero_spatial_bcat.mp4" type="video/mp4"></video>
               </div>
               <div class="video-box">
-                <span class="video-label baseline">FM-DiT</span>
+                <span class="video-label baseline">FM-MMDiT</span>
                 <video autoplay muted loop playsinline><source src="./static/videos/libero_spatial_mmdit.mp4" type="video/mp4"></video>
               </div>
             </div>
@@ -288,7 +288,7 @@ conditioning.
                 <video autoplay muted loop playsinline><source src="./static/videos/libero_10_bcat.mp4" type="video/mp4"></video>
               </div>
               <div class="video-box">
-                <span class="video-label baseline">FM-DiT</span>
+                <span class="video-label baseline">FM-MMDiT</span>
                 <video autoplay muted loop playsinline><source src="./static/videos/libero_10_mmdit.mp4" type="video/mp4"></video>
               </div>
             </div>
@@ -334,7 +334,7 @@ conditioning.
                 <div class="placeholder-box">BCAT video</div>
               </div>
               <div class="video-box">
-                <span class="video-label baseline">FM-DiT</span>
+                <span class="video-label baseline">FM-MMDiT</span>
                 <div class="placeholder-box">FM-DiT video</div>
               </div>
             </div>
@@ -347,7 +347,7 @@ conditioning.
                 <div class="placeholder-box">BCAT video</div>
               </div>
               <div class="video-box">
-                <span class="video-label baseline">FM-DiT</span>
+                <span class="video-label baseline">FM-MMDiT</span>
                 <div class="placeholder-box">FM-DiT video</div>
               </div>
             </div>
@@ -533,7 +533,7 @@ conditioning.
         <div class="content has-text-justified">
           <p>
             <b>1. The data regime is fundamentally small.</b>
-            With 50 demonstrations per task, the training data covers a narrow region of the state-action space. Large overparameterized models overfit to noise and ignore signal.
+            With 50 demonstrations per task, the training data covers a narrow region of the state-action space. Large overparameterized models tend to overfit to noise and ignore signal.
           </p>
           <p>
             <b>2. The task structure is too simple.</b>
@@ -541,7 +541,7 @@ conditioning.
           </p>
           <p>
             <b>3. The action distributions are unimodal.</b>
-            Expert demonstrations follow similar trajectories. There is no genuine multimodality that would necessitate generative models. Deterministic BC consistently outperforms flow matching.
+            Expert demonstrations follow similar trajectories. There is no genuine multimodality that would necessitate generative models. Deterministic L1 regression consistently outperforms flow matching.
           </p>
           <p>
             <b>We urge the community</b> to develop simulation environments with genuinely multimodal tasks, visually ambiguous scenarios requiring language disambiguation, larger demonstration datasets, and longer-horizon compositional tasks.
@@ -557,11 +557,11 @@ conditioning.
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{bcat2025,
+    <pre><code>@article{bcat2026,
   author    = {Anonymous},
-  title     = {Large Scale Vision-Language-Action Models Are Not All You Need},
+  title     = {Simplicity Matches Scale on Current Imitation Learning Benchmarks},
   journal   = {arXiv preprint},
-  year      = {2025},
+  year      = {2026},
 }</code></pre>
   </div>
 </section>
