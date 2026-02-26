@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="Large-Scale Vision-Language-Action Models Are Not All You Need.">
+        content="Simplicity Matches Scale on Current Imitation Learning Benchmarks.">
   <meta name="keywords" content="Imitation Learning, Vision-Language-Action Models, Generative Modeling, Robotics">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Large-Scale Vision-Language-Action Models Are Not All You Need</title>
+  <title>Simplicity Matches Scale on Current Imitation Learning Benchmarks</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
@@ -215,13 +215,36 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Vision-Language-Action (VLA) models have established new frontiers in learning autonomous fine-grained manipulation policies, achieving state-of-the-art performance across several simulation benchmarks and on-hardware tasks. While real-world robotic setups are inherently unique and difficult to reproduce, simulation benchmarks offer deterministic, controllable environments that serve as ideal testbeds for systematic policy evaluation.
+Vision-Language-Action (VLA) models have established new frontiers in learning autonomous fine-grained
+manipulation policies, achieving state-of-the-art performance
+across several simulation benchmarks and physical hardware
+tasks. While real-world robotic setups are inherently unique
+and difficult to reproduce, simulation benchmarks offer deterministic, controllable environments that serve as ideal testbeds
+for systematic policy evaluation.
           </p>
           <p>
-            In this paper, we shed light on two underexplored aspects of current trends in imitation learning for robotic manipulation. First, we demonstrate that large-scale VLA policies with billions of parameters can be matched on standard simulation benchmarks by <b>simple, non-autoregressive action transformers with fewer than 10 million trainable parameters</b>. We show that a bidirectional decoder-only action transformer trained with behavioral cloning achieves performance within the range of current state-of-the-art leaderboards on both the LIBERO and Meta-World simulation benchmarks.
+In this paper, we shed light
+on two underexplored aspects of current trends in imitation
+learning for robotic manipulation. First, we demonstrate that
+large-scale pre-trained VLA policies with billions of parameters
+can be matched on standard benchmarks by simple, nonautoregressive action transformers with fewer than 10 million
+trainable parameters. We show that a bidirectional decoderonly action transformer trained with Behavioral Cloning (BC)
+achieves competitive performance comparable to state-of-theart results on both the LIBERO and Meta-World simulation
+benchmarks, even with fewer than 3 million trainable parameters.
           </p>
           <p>
-            Second, we argue that these standard robotics benchmarks suffer from insufficient task complexity, lack multimodality in the action distribution, do not require language grounding for disambiguation, and are fundamentally small-data regimes. Under these conditions, we show that generative modeling paradigms based on denoising score matching such as flow matching are unnecessarily complex. Flow-matching-based action Diffusion Transformers of comparable parameter count exhibit lower success rates and produce jerky, noisy trajectories. By contrast, a standard deterministic behavioral cloning policy yields substantially higher success rates, even with vision-only input and no language conditioning.
+Second, we argue that these standard robotics benchmarks
+suffer from insufficient task complexity, lack multimodality in
+the action distribution, rarely require language instructions
+for task disambiguation, and are fundamentally small-data
+regimes. Under these conditions, we show that generative action
+modeling paradigms such as flow matching are not justified
+by the task demands. Flow-matching-based action diffusion
+transformers of comparable parameter count exhibit lower
+success rates and produce jerky, noisy trajectories. By contrast,
+a standard deterministic BC policy yields substantially higher
+success rates, even with vision-only input and no language
+conditioning.
           </p>
         </div>
       </div>
