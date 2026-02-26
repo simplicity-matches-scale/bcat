@@ -159,7 +159,7 @@ conditioning.
 </section>
 
 <!-- ======== BCAT vs FLOW MATCHING: DEPLOYMENT COMPARISON ======== -->
-<section class="section alt-bg">
+<section class="section">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
@@ -721,8 +721,256 @@ conditioning.
 </section>
 
 
-<!-- ======== KEY FINDINGS ======== -->
+<!-- ======== IMPLEMENTATION DETAILS ======== -->
 <section class="section alt-bg">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Implementation Details</h2>
+        <div class="content has-text-justified">
+          <p>
+            All policies share the same optimizer, embedding dimension, feedforward dimension, and training hyperparameters. They differ only in the action decoder architecture and training objective. We provide full specifications below, extracted from the training configs.
+          </p>
+        </div>
+
+        <!-- Architecture cards -->
+        <div class="columns is-multiline" style="margin-top: 1rem;">
+
+          <!-- BCAT card -->
+          <div class="column is-one-third">
+            <div class="finding-card" style="height: 100%;">
+              <div class="finding-title" style="margin-bottom: 0.8rem; font-size: 1.05rem;">BCAT <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 400;">(32M total)</span></div>
+              <table style="width:100%; font-size: 0.82rem; color: var(--text-secondary);">
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Trainable params</td><td style="padding: 3px 0; text-align:right; font-weight:600; color: var(--text-primary);">8.9M</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Vision encoder</td><td style="padding: 3px 0; text-align:right;">EfficientNet-B0</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Language encoder</td><td style="padding: 3px 0; text-align:right;">BERT (frozen, 23.4M)</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Decoder type</td><td style="padding: 3px 0; text-align:right;">Bidirectional Transformer</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Decoder layers</td><td style="padding: 3px 0; text-align:right;">3</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Decoder activation</td><td style="padding: 3px 0; text-align:right;">ReLU</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Attention type</td><td style="padding: 3px 0; text-align:right;">MHA (8 heads)</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Normalization</td><td style="padding: 3px 0; text-align:right;">RMSNorm</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Action heads</td><td style="padding: 3px 0; text-align:right;">MLP (256&rarr;128), SiLU</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Training objective</td><td style="padding: 3px 0; text-align:right;">L1 regression (BC)</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Paradigm</td><td style="padding: 3px 0; text-align:right; font-weight: 600; color: var(--accent-dark);">Deterministic</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- BCAT-Small card -->
+          <div class="column is-one-third">
+            <div class="finding-card" style="height: 100%;">
+              <div class="finding-title" style="margin-bottom: 0.8rem; font-size: 1.05rem;">BCAT-Small <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 400;">(13.9M total)</span></div>
+              <table style="width:100%; font-size: 0.82rem; color: var(--text-secondary);">
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Trainable params</td><td style="padding: 3px 0; text-align:right; font-weight:600; color: var(--text-primary);">2.2M</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Vision encoder</td><td style="padding: 3px 0; text-align:right;">MobileNetV4</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Language encoder</td><td style="padding: 3px 0; text-align:right;">MiniLM-L6-v2 (frozen, 11.7M)</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Decoder type</td><td style="padding: 3px 0; text-align:right;">Bidirectional Transformer</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Decoder layers</td><td style="padding: 3px 0; text-align:right;">2</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Decoder activation</td><td style="padding: 3px 0; text-align:right;">ReLU</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Attention type</td><td style="padding: 3px 0; text-align:right;">MHA (4 heads)</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Normalization</td><td style="padding: 3px 0; text-align:right;">RMSNorm</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Action heads</td><td style="padding: 3px 0; text-align:right;">MLP (256&rarr;128), SiLU</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Training objective</td><td style="padding: 3px 0; text-align:right;">L1 regression (BC)</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Paradigm</td><td style="padding: 3px 0; text-align:right; font-weight: 600; color: var(--accent-dark);">Deterministic</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- FM-DiT card -->
+          <div class="column is-one-third">
+            <div class="finding-card" style="height: 100%;">
+              <div class="finding-title" style="margin-bottom: 0.8rem; font-size: 1.05rem;">Flow-DiT <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 400;">(32M total)</span></div>
+              <table style="width:100%; font-size: 0.82rem; color: var(--text-secondary);">
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Trainable params</td><td style="padding: 3px 0; text-align:right; font-weight:600; color: var(--text-primary);">8.9M</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Vision encoder</td><td style="padding: 3px 0; text-align:right;">EfficientNet-B0</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Language encoder</td><td style="padding: 3px 0; text-align:right;">BERT (frozen, 23.4M)</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Decoder type</td><td style="padding: 3px 0; text-align:right;">DiT (MM-DiT / CA-DiT)</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Decoder layers</td><td style="padding: 3px 0; text-align:right;">3</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Decoder activation</td><td style="padding: 3px 0; text-align:right;">ReLU</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Normalization</td><td style="padding: 3px 0; text-align:right;">adaRMSNorm-Zero</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Timestep sampling</td><td style="padding: 3px 0; text-align:right;">Beta(1.5, 1)</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Inference steps</td><td style="padding: 3px 0; text-align:right;">10 (Euler)</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Training objective</td><td style="padding: 3px 0; text-align:right;">Flow matching (MSE)</td></tr>
+                <tr><td style="padding: 3px 0; color: var(--text-muted);">Paradigm</td><td style="padding: 3px 0; text-align:right; font-weight: 600;">Generative</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shared training config -->
+        <div style="margin-top: 1.5rem;">
+          <h3 class="title is-4">Shared Training Configuration</h3>
+          <div class="content has-text-justified" style="margin-bottom: 0.75rem;">
+            <p>The following hyperparameters are identical across all three model variants (BCAT, BCAT-Small, Flow-DiT).</p>
+          </div>
+          <div class="columns is-multiline">
+            <div class="column is-half">
+              <div class="results-table-wrap">
+                <table>
+                  <thead><tr><th colspan="2" style="text-align:left;">Optimizer &amp; Schedule</th></tr></thead>
+                  <tbody>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Optimizer</td><td>AdamW</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Learning rate</td><td>5e-5</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Backbone LR</td><td>1e-5</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Weight decay</td><td>0.02 (backbone: 0.001)</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Betas</td><td>(0.9, 0.999)</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">LR warmup steps</td><td>1,000</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Gradient clipping</td><td>max norm 1.0</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">LR schedule</td><td>None (constant after warmup)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="results-table-wrap">
+                <table>
+                  <thead><tr><th colspan="2" style="text-align:left;">Architecture &amp; Data</th></tr></thead>
+                  <tbody>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Embed dim</td><td>128</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Feedforward dim</td><td>512</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Positional encoding</td><td>Sinusoidal</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Dropout</td><td>0.2 (attn: 0.05)</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Action chunk (K)</td><td>10</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Obs. horizon (S)</td><td>1</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Batch size</td><td>64</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">Image normalization</td><td>[-1, 1]</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Per-benchmark details -->
+        <div style="margin-top: 1rem;">
+          <h3 class="title is-4">Per-Benchmark Settings</h3>
+          <div class="results-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="text-align: left;"></th>
+                  <th>LIBERO</th>
+                  <th>Meta-World (MT50)</th>
+                  <th>LIBERO-Plus</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Action space</td>
+                  <td>7D (3D pos + 3D ori + gripper)</td>
+                  <td>4D (3D disp. + gripper)</td>
+                  <td>7D (3D pos + 3D ori + gripper)</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Orientation repr.</td>
+                  <td>Euler angles</td>
+                  <td>N/A</td>
+                  <td>Euler angles</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Camera views</td>
+                  <td>2 (agentview + eye-in-hand)</td>
+                  <td>1 (third-person)</td>
+                  <td>2 (agentview + eye-in-hand)</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Image resolution</td>
+                  <td>256 &times; 256</td>
+                  <td>480 &times; 480</td>
+                  <td>256 &times; 256</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Demos per task</td>
+                  <td>50</td>
+                  <td>50</td>
+                  <td>50</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Number of tasks</td>
+                  <td>40 (4 &times; 10)</td>
+                  <td>50</td>
+                  <td>40</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Training epochs</td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>50</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Total training steps</td>
+                  <td>382,900</td>
+                  <td>--</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Kinematics norm.</td>
+                  <td>Min-max (winsorized 1%-99%)</td>
+                  <td>Min-max (winsorized 1%-99%)</td>
+                  <td>Min-max (winsorized 1%-99%)</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Temporal ensembling</td>
+                  <td colspan="3">Yes (overlapping chunks, 3 Hz update rate)</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Eval rollouts</td>
+                  <td colspan="3">10 per task &times; 3 seeds</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; color: var(--text-muted);">Hardware</td>
+                  <td colspan="3">Single NVIDIA RTX A5000 (24 GB)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Data augmentation -->
+        <div style="margin-top: 1.5rem;">
+          <h3 class="title is-4">Data Augmentation</h3>
+          <div class="content has-text-justified" style="margin-bottom: 0.75rem;">
+            <p>We apply stochastic color and spatial augmentations to camera images during training.</p>
+          </div>
+          <div class="columns">
+            <div class="column is-half">
+              <div class="results-table-wrap">
+                <table>
+                  <thead><tr><th style="text-align:left;">Color Augmentations</th><th>Prob.</th></tr></thead>
+                  <tbody>
+                    <tr><td style="text-align:left; color: var(--text-muted);">ColorJitter (brightness=0.3, contrast=0.4, saturation=0.5, hue=0.1)</td><td>0.5</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">RandomSunFlare</td><td>0.6</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">RandomBrightnessContrast (&plusmn;0.4)</td><td>0.6</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">RandomGamma (80&ndash;120)</td><td>0.3</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">CLAHE (clip=4)</td><td>0.3</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">RandomShadow</td><td>0.4</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">JPEG Compression (quality 50&ndash;100)</td><td>0.2</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="column is-half">
+              <div class="results-table-wrap">
+                <table>
+                  <thead><tr><th style="text-align:left;">Spatial Augmentations</th><th>Prob.</th></tr></thead>
+                  <tbody>
+                    <tr><td style="text-align:left; color: var(--text-muted);">GaussianBlur (kernel 3&ndash;7)</td><td>0.5</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">CoarseDropout (max 8 holes, 8&times;8 px)</td><td>0.3</td></tr>
+                    <tr><td style="text-align:left; color: var(--text-muted);">ShiftScaleRotate (scale &minus;0.5&ndash;0.6, shift &plusmn;0.0625)</td><td>0.5</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== KEY FINDINGS ======== -->
+<section class="section">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-four-fifths">
