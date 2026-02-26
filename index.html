@@ -272,7 +272,7 @@ conditioning.
             </div>
           </div>
           <div class="column is-half">
-            <p class="task-title"><span class="benchmark-label metaworld">MT50-Very Hard</span> hammer-v3</p>
+            <p class="task-title"><span class="benchmark-label metaworld">MT50-Very Hard</span> shelf-place-v3</p>
             <div class="comparison-grid">
               <div class="video-box">
                 <span class="video-label ours">BCAT (Ours)</span>
@@ -357,35 +357,69 @@ conditioning.
         <div class="content has-text-justified">
           <p>
             Even when the language instruction should disambiguate between visually similar tasks, visual features in the initial observation are in near 1-to-1 correspondence with each task identity.
+            Below we show initial observations from tasks that <em>share the same objects and scene</em>&mdash;only the language instruction differs. Yet each task has a <strong>fixed layout</strong>, making the visual observation alone sufficient for disambiguation.
           </p>
         </div>
 
-        <div class="columns is-multiline">
-          <div class="column is-half">
-            <p class="task-title"><span class="benchmark-label libero">LIBERO</span> Vision-only vs. Vision+Language</p>
-            <div class="comparison-grid">
-              <div class="video-box">
-                <span class="video-label ours">Vision Only</span>
-                <div class="placeholder-box">Vision-only rollout</div>
-              </div>
-              <div class="video-box">
-                <span class="video-label baseline">Vision + Lang</span>
-                <div class="placeholder-box">Vision+Lang rollout</div>
-              </div>
+        <!-- Meta-World: coffee-button / coffee-push / coffee-pull -->
+        <p class="task-title" style="margin-bottom: 0.3rem;">
+          <span class="benchmark-label metaworld">Meta-World</span> Three coffee tasks &mdash; same scene, different goals
+        </p>
+        <p class="caption" style="margin-top:0; margin-bottom: 0.8rem;">
+          The <span style="color:var(--green-accent); font-weight:700;">green</span> and <span style="color:var(--red-accent); font-weight:700;">red</span> dots indicate target locations and are always in the same position for each task, making the instruction redundant.
+        </p>
+        <div class="columns is-centered" style="margin-bottom: 1rem;">
+          <div class="column is-one-third">
+            <div class="img-card">
+              <img src="./static/images/button_coffee.png" alt="coffee-button-v3 initial observation">
             </div>
+            <p class="caption"><b>coffee-button-v3</b><br><span style="color:var(--green-accent);">&bull;</span> Green dot aligned with mug &rarr; press button</p>
           </div>
-          <div class="column is-half">
-            <p class="task-title"><span class="benchmark-label metaworld">Meta-World</span> Vision-only vs. Vision+Language</p>
-            <div class="comparison-grid">
-              <div class="video-box">
-                <span class="video-label ours">Vision Only</span>
-                <div class="placeholder-box">Vision-only rollout</div>
-              </div>
-              <div class="video-box">
-                <span class="video-label baseline">Vision + Lang</span>
-                <div class="placeholder-box">Vision+Lang rollout</div>
-              </div>
+          <div class="column is-one-third">
+            <div class="img-card">
+              <img src="./static/images/push_coffee.png" alt="coffee-push-v3 initial observation">
             </div>
+            <p class="caption"><b>coffee-push-v3</b><br><span style="color:var(--red-accent);">&bull;</span> Red dot away from mug &rarr; push mug to dot</p>
+          </div>
+          <div class="column is-one-third">
+            <div class="img-card">
+              <img src="./static/images/pull_coffee.png" alt="coffee-pull-v3 initial observation">
+            </div>
+            <p class="caption"><b>coffee-pull-v3</b><br><span style="color:var(--green-accent);">&bull;</span> Green dot not aligned with mug &rarr; pull mug to dot</p>
+          </div>
+        </div>
+
+        <!-- LIBERO Object: pick up the ... -->
+        <p class="task-title" style="margin-bottom: 0.3rem; margin-top: 2rem;">
+          <span class="benchmark-label libero">LIBERO-Object</span> "Pick up the …" &mdash; four instructions, four fixed layouts
+        </p>
+        <p class="caption" style="margin-top:0; margin-bottom: 0.8rem;">
+          Each instruction specifies a different object to pick up, yet the entire scene layout is unique per instruction&mdash;object types, positions, and counts all change. A vision-only policy can trivially distinguish these without reading the language.
+        </p>
+        <div class="columns is-centered" style="margin-bottom: 1.5rem;">
+          <div class="column is-one-quarter">
+            <div class="img-card">
+              <img src="./static/images/pick_cheese.png" alt="pick up the cream cheese and place it in the basket">
+            </div>
+            <p class="caption"><b>"pick up the cream cheese and place it in the basket"</b></p>
+          </div>
+          <div class="column is-one-quarter">
+            <div class="img-card">
+              <img src="./static/images/pick_milk.png" alt="pick up the milk and place it in the basket">
+            </div>
+            <p class="caption"><b>"pick up the milk and place it in the basket"</b></p>
+          </div>
+          <div class="column is-one-quarter">
+            <div class="img-card">
+              <img src="./static/images/pick_orange.png" alt="pick up the orange juice and place it in the basket">
+            </div>
+            <p class="caption"><b>"pick up the orange juice and place it in the basket"</b></p>
+          </div>
+          <div class="column is-one-quarter">
+            <div class="img-card">
+              <img src="./static/images/pick_ketchup.png" alt="pick up the ketchup and place it in the basket">
+            </div>
+            <p class="caption"><b>"pick up the ketchup and place it in the basket"</b></p>
           </div>
         </div>
 
@@ -407,50 +441,63 @@ conditioning.
           </p>
         </div>
 
-        <div class="columns is-multiline">
-          <div class="column is-one-third">
-            <p class="task-title"><span class="benchmark-label libero">Camera Viewpoint 1</span></p>
+        <p class="caption" style="margin-bottom: 1rem;">
+          Each video shows an example rollout under a given perturbation type. Different perturbation types may show different tasks; the videos are <em>not</em> a controlled comparison across the same rollout.
+        </p>
+
+        <!-- Camera viewpoint perturbations (multiple angles of the same type) -->
+        <h4 class="title is-5" style="margin-bottom: 0.5rem;">Camera Viewpoint Perturbation</h4>
+        <p class="caption" style="margin-top: 0; margin-bottom: 0.8rem;">Several example viewpoints illustrating the range of camera perturbations.</p>
+        <div class="columns is-multiline" style="margin-bottom: 1.5rem;">
+          <div class="column is-one-quarter">
+            <p class="task-title"><span class="benchmark-label libero">Viewpoint 1</span></p>
             <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden;">
               <video autoplay muted loop playsinline style="width:100%; display:block;"><source src="./static/videos/libero_plus_camera.mp4" type="video/mp4"></video>
             </div>
           </div>
-          <div class="column is-one-third">
-            <p class="task-title"><span class="benchmark-label libero">Camera Viewpoint 2</span></p>
+          <div class="column is-one-quarter">
+            <p class="task-title"><span class="benchmark-label libero">Viewpoint 2</span></p>
             <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden;">
               <video autoplay muted loop playsinline style="width:100%; display:block;"><source src="./static/videos/libero_plus_camera2.mp4" type="video/mp4"></video>
             </div>
           </div>
-          <div class="column is-one-third">
-            <p class="task-title"><span class="benchmark-label libero">Camera Viewpoint 3</span></p>
+          <div class="column is-one-quarter">
+            <p class="task-title"><span class="benchmark-label libero">Viewpoint 3</span></p>
             <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden;">
               <video autoplay muted loop playsinline style="width:100%; display:block;"><source src="./static/videos/libero_plus_camera3.mp4" type="video/mp4"></video>
             </div>
           </div>
-          <div class="column is-one-third">
-            <p class="task-title"><span class="benchmark-label libero">Camera Viewpoint 4</span></p>
+          <div class="column is-one-quarter">
+            <p class="task-title"><span class="benchmark-label libero">Viewpoint 4</span></p>
             <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden;">
               <video autoplay muted loop playsinline style="width:100%; display:block;"><source src="./static/videos/libero_plus_camera_4.mp4" type="video/mp4"></video>
             </div>
           </div>
-          <div class="column is-one-third">
+        </div>
+
+        <!-- Other perturbation types -->
+        <h4 class="title is-5" style="margin-bottom: 0.5rem;">Other Perturbation Types</h4>
+        <p class="caption" style="margin-top: 0; margin-bottom: 0.8rem;">One example rollout per perturbation type.</p>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter">
             <p class="task-title"><span class="benchmark-label libero">Background</span></p>
             <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden;">
               <video autoplay muted loop playsinline style="width:100%; display:block;"><source src="./static/videos/libero_plus_background.mp4" type="video/mp4"></video>
             </div>
           </div>
-          <div class="column is-one-third">
+          <div class="column is-one-quarter">
             <p class="task-title"><span class="benchmark-label libero">Language</span></p>
             <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden;">
               <video autoplay muted loop playsinline style="width:100%; display:block;"><source src="./static/videos/libero_plus_language.mp4" type="video/mp4"></video>
             </div>
           </div>
-          <div class="column is-one-third">
+          <div class="column is-one-quarter">
             <p class="task-title"><span class="benchmark-label libero">Layout</span></p>
             <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden;">
               <video autoplay muted loop playsinline style="width:100%; display:block;"><source src="./static/videos/libero_plus_layout.mp4" type="video/mp4"></video>
             </div>
           </div>
-          <div class="column is-one-third">
+          <div class="column is-one-quarter">
             <p class="task-title"><span class="benchmark-label libero">Noise</span></p>
             <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden;">
               <video autoplay muted loop playsinline style="width:100%; display:block;"><source src="./static/videos/libero_plus_noise.mp4" type="video/mp4"></video>
@@ -533,7 +580,7 @@ conditioning.
             </div>
           </div>
           <div class="column is-half">
-            <p class="task-title"><span class="benchmark-label metaworld">MT50-Very Hard</span> hammer-v3</p>
+            <p class="task-title"><span class="benchmark-label metaworld">MT50-Very Hard</span> shelf-place-v3</p>
             <div style="border: 1px solid var(--border); border-radius: 10px; overflow: hidden;">
               <video autoplay muted loop playsinline style="width:100%; display:block;"><source src="./static/videos/mt50_shelf_bcat_small.mp4" type="video/mp4"></video>
             </div>
